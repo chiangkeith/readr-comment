@@ -1,10 +1,15 @@
-const Comments = require('./components/Comment.vue')
-module.exports = Comments
+import Comment from './components/Comment.vue'
 
-Comments.install = Vue => Vue.component(Comments.name, Comments)
-Comments.version = proccess.env.VERSION
-
-// Install by default if using the script tag
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(Comments)
+const Plugin = {
+  install (Vue) {
+    if (this.installed) {
+      return
+    }
+    this.installed = true
+    Vue.component(Comment.name, Comment)
+  },
+  version: process.env.VERSION
 }
+
+export default Plugin
+export { Comment }

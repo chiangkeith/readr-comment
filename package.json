@@ -4,39 +4,40 @@
   "description": "This package is developed to meet Readr.tw's requirements of comments.",
   "main": "dist/index.js",
   "scripts": {
-    "dist": "vue build ./src/index.js --config ./build.config.js --dist ./dist/ --prod --lib",
-    "build": "yarn run dist -- --disable-compress",
-    "prepublish": "yarn run build"
+    "build": "yarn run webpack",
+    "dev": "webpack --config ./build/webpack.config.js --progress --colors --watch",
+    "prepublish": "yarn run build",
+    "webpack": "webpack --config ./build/webpack.config.js --progress"
   },
   "keywords": [],
   "author": "KAI-CHIH KEITH CHIANG",
-  "license": "",
+  "license": "MIT",
   "dependencies": {
-    "autoprefixer": "^8.5.0",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
-    "babel-loader": "^6.2.7",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-async-to-generator": "6.24.1",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-decorators-legacy": "1.3.4",
-    "babel-plugin-transform-object-assign": "^6.8.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-loader": "7.1.1",
     "babel-preset-babili": "0.0.11",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.18.0",
-    "babel-runtime": "^6.22.0",    
+    "babel-runtime": "^6.22.0",
     "debug": "^3.1.0",
-    "postcss-modules": "^1.1.0"
+    "lodash": "^4.17.10"
   },
   "presets": [
     "env"
   ],
   "devDependencies": {
-    "@vue/component-compiler-utils": "^1.2.1",
-    "vue-template-compiler": "^2.5.16"
+    "autoprefixer": "^8.5.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "css-loader": "^0.28.11",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "url-loader": "^1.0.1",
+    "vue-loader": "^14.2.0",
+    "vue-style-loader": "^4.1.0",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^3.10.0"
   }
 }
