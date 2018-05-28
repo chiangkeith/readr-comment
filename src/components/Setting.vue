@@ -1,38 +1,56 @@
 <template>
-  <div class="setting" tabIndex="0" @focusout="closeDropbox" @focus="openDropbox">
+  <div class="setting" tabIndex="0" @focusout="closeDropbox" @focus="openDropbox" v-if="hasAnyAbility" >
     <div class="setting__btn"><span>▪▪▪</span></div>
     <div class="setting__dropbox">
       <div class="container" v-show="dtopbox_status">
-        <div class="edit" @click="goEdit"><span v-text="COMMENT_SETTING.EDIT"></span></div>
-        <div class="delete"><span v-text="COMMENT_SETTING.DEL"></span></div>
-        <div class="hide"><span v-text="COMMENT_SETTING.HIDE"></span></div>
+        <div class="edit" v-if="get(abilities, 'isEditable')" @click="goAct(POST_ACTION.EDIT)"><span v-text="COMMENT_SETTING.EDIT"></span></div>
+        <div class="delete" v-if="get(abilities, 'isDeletible')" @click="goAct(POST_ACTION.DELETE)"><span v-text="COMMENT_SETTING.DEL"></span></div>
+        <div class="hide" v-if="get(abilities, 'isHiddable')" @click="goAct(POST_ACTION.HIDE)"><span v-text="COMMENT_SETTING.HIDE"></span></div>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import { COMMENT_SETTING } from 'src/constants'
+  import { COMMENT_SETTING, POST_ACTION, } from 'src/constants'
+  import { map, get, } from 'lodash'
   const debug = require('debug')('READR-COMMENT:Setting')
   export default {
     name: 'Setting',
+    computed: {
+      hasAnyAbility () {
+        let isAny = false
+        map(this.abilities, (a, k) => {
+          if (a) {
+            isAny = true
+          }
+        })
+        return isAny
+      }
+    },
     data () {
       return {
-        dtopbox_status: 0,
         COMMENT_SETTING,
+        POST_ACTION,
+        dtopbox_status: 0,
       }
     },
     methods: {
-      closeDropbox () {
-        this.dtopbox_status = 0
-      },
-      goEdit () {
-        this.$emit('goEdit')
-      },
-      openDropbox () {
-        this.dtopbox_status = 1
-      },
+      closeDropbox () { this.dtopbox_status = 0 },
+      get,
+      goAct (type) { this.$emit('goAct', type) },
+      openDropbox () { this.dtopbox_status = 1 },
     },
     mounted () {},
+    props: {
+      abilities: {
+        type: Object,
+        default: () => ({
+          isEditable: false,
+          isDeletible: false,
+          isHiddable: false,          
+        })
+      },
+    },
   }
 </script>
 <style lang="stylus" scoped>

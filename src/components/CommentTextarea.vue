@@ -1,5 +1,6 @@
 <template>
   <CommentContainer :level="level">
+    <img :src="meImage" slot="left" v-if="meImage">
     <div class="textarea-container" slot="middle">
       <textarea :rows="rows" cols="50" v-model="curr_value" @click="activate"
         :placeholder="placeholder || COMMENT_SETTING.PLACEHOLDER"></textarea>
@@ -12,7 +13,9 @@
 </template>
 <script>
   import CommentContainer from 'src/components/CommentContainer.vue'
+  import moment from 'moment'
   import { COMMENT_SETTING, EDIT_TYPE, } from 'src/constants'
+  import { get, } from 'lodash'
 
   export default {
     name: 'CommentTextarea',
@@ -20,6 +23,9 @@
       CommentContainer,
     },
     computed: {
+      meImage () {
+        return get(this.me, 'profileImage')
+      },
       rows () {
         return this.status ? 4 : 2
       },
@@ -45,10 +51,19 @@
         }        
       },
       doComment () {
+        const comment_data = {
+          author: get(this.me, 'id'),
+          authorNickname: get(this.me, 'nickname'),
+          authorImage: this.meImage,
+          body: this.curr_value,
+          level: this.level,
+          parentId: this.parentId || null,
+          timestamp: moment().format('YYYY-MM-DD HH:mm:ss')
+        }
         if (this.type === EDIT_TYPE.ADD) {
-          this.$emit('addComment', this.curr_value, this.level, this.targetId)
+          this.$emit('addComment', comment_data, this.parentId)
         } else if (this.type === EDIT_TYPE.UPDATE) {
-          this.$emit('updateComment', this.curr_value, this.level, this.targetId, this.subTargetId)
+          this.$emit('updateComment', comment_data, this.parentId, this.id)
         }
         this.curr_value = ''
         this.status = false
@@ -71,17 +86,20 @@
       placeholder: {
         type: String,
       },
-      subTargetId: {
-        type: String,
-      },
-      targetId: {
-        type: String,
+      id: {
+        type: Number,
       },
       value: {
         type: String,
       },
       type: {
         type: String,
+      },
+      me: {
+        type: Object,
+      },
+      parentId: {
+        type: Number,
       }
     },
     watch: {

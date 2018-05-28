@@ -44,4 +44,11 @@
       background-repeat no-repeat
       background-position center center
       margin-right 10px  
+      overflow hidden
+      img
+        width 100%
+        height 100%
+        object-position center center
+        object-fit contain
+        border-radius 50%
 </style>
