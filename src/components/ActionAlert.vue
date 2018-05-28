@@ -1,5 +1,5 @@
 <template>
-  <div class="action-alert" v-show="showAlert">
+  <div class="action-alert" :class="{ 'mobile': isMobile }" v-show="showAlert">
     <div class="action-alert__container">
       <div class="message"><span v-text="message"></span></div>
       <div class="btn-wrapper">
@@ -47,6 +47,10 @@
         type: Function,
         default: () => Promise.resolve(),
       },
+      isMobile: {
+        type: Boolean,
+        default: () => false,
+      },      
       showAlert: {
         type: Boolean,
         default: () => false,
@@ -90,8 +94,8 @@
         display flex
         justify-content flex-end
         .btn
-          width 30px
           height 20px
+          padding 2px
           border solid 1px #808080
           margin-left 8px
           cursor pointer
@@ -103,5 +107,14 @@
             color #fff
             background-color #11b8c9
             border solid 1px #11b8c9
+    &.mobile
+      .action-alert__container
+        .message
+          font-size 0.875rem
+        .btn-wrapper
+          .btn
+            font-size 0.875rem
+            overflow hidden
+
 
 </style>

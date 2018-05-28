@@ -1,5 +1,5 @@
 <template>
-  <CommentContainer :level="level">
+  <CommentContainer :level="level" :class="{ 'mobile': isMobile }">
     <img :src="meImage" slot="left" v-if="meImage">
     <div class="textarea-container" slot="middle">
       <textarea :rows="rows" cols="50" v-model="curr_value" @click="activate"
@@ -76,6 +76,10 @@
       }
     },
     props: {
+      isMobile: {
+        type: Boolean,
+        default: () => false,
+      },      
       level: {
         type: Number,
         default: () => 0,
@@ -135,4 +139,10 @@
     cursor pointer
     div
       margin-right 10px
+  .mobile
+    .textarea-container
+      textarea
+        font-size 0.6875rem
+    .tool
+      font-size 0.6875rem
 </style>

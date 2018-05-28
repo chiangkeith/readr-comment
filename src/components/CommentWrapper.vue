@@ -4,6 +4,7 @@
     :type="EDIT_TYPE.ADD"
     :level="level || checkLevel()"
     :parentId="parentId"
+    :isMobile="isMobile"
     :me="me"></CommentTextarea>
   <CommentContent v-else-if="comment && !comment.isEditing"
     @refreshSubComment="refreshSubComment"
@@ -13,6 +14,7 @@
     :commentData="comment"
     :showTextarea.sync="comment.showTextarea"
     :isEditing.sync="comment.isEditing"
+    :isMobile="isMobile"
     :me="me"></CommentContent>
   <CommentTextarea v-else-if="comment && comment.isEditing"
     @updateComment="update"
@@ -22,6 +24,7 @@
     :isEditing.sync="comment.isEditing"
     :parentId="comment.parentId"
     :id="comment.id"
+    :isMobile="isMobile"
     :me="me"></CommentTextarea>
 </template>
 <script>
@@ -52,6 +55,10 @@
       this.comment = this.commentData
     },
     props: {
+      isMobile: {
+        type: Boolean,
+        default: () => false,
+      },
       commentData: {
         type: Object,
       },

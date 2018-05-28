@@ -51,4 +51,17 @@
         object-position center center
         object-fit contain
         border-radius 50%
+
+  &.mobile
+    &.level-0
+      .comment-container__left.avatar
+        width 40px
+        height 40px
+    .comment-container__left
+      &.avatar
+        width 25px
+        height 25px
+    .comment-container__right
+      width 0
+      display none
 </style>

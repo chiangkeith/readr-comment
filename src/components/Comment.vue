@@ -1,9 +1,11 @@
 <template>
   <div class="readr-comment">
     <CommentWrapper  v-if="!showTextareaBottom(commentList.length)"
+      :isMobile="isMobile"
       :addComment="addComment" :level="0" :me="me"></CommentWrapper>      
     <template v-for="comment in commentList">
       <CommentWrapper v-if="comment.status"
+        :isMobile="isMobile"
         :commentData="comment"
         :refreshSubComment="refreshSubComment"
         :reportComment="doReportComment"
@@ -12,6 +14,7 @@
         :update="update" :me="me"></CommentWrapper>
       <template v-for="sub_comment in comment.replies">
         <CommentWrapper v-if="sub_comment.status"
+          :isMobile="isMobile"
           :commentData="sub_comment"
           :refreshSubComment="refreshSubComment"
           :reportComment="doReportComment"
@@ -20,18 +23,21 @@
           :update="update" :me="me"></CommentWrapper>       
       </template>
       <CommentWrapper v-show="comment.showTextarea || get(comment, 'replies.length', 0)"
+        :isMobile="isMobile"
         :addComment="addComment"
         :parentId="comment.id"
         :level="1" :me="me"></CommentWrapper>
     </template>
     <CommentWrapper v-if="showTextareaBottom(commentList.length)"
+      :isMobile="isMobile"
       :addComment="addComment" :level="0" :me="me"></CommentWrapper>
-    <ActionAlert :showAlert.sync="showAlert" :type="alertType" :callback="alertConfirmCb"></ActionAlert>
+    <ActionAlert :showAlert.sync="showAlert" :type="alertType" :callback="alertConfirmCb" :isMobile="isMobile"></ActionAlert>
   </div>
 </template>
 <script>
   import ActionAlert from 'src/components/ActionAlert.vue'
   import CommentWrapper from 'src/components/CommentWrapper.vue'
+  import isMobile from 'ismobilejs'
   import { NEW_COMMENT_WAY, POST_ACTION, } from 'src/constants'
   import { find, get, remove, } from 'lodash'
   const debug = require('debug')('READR-COMMENT:Comment')
@@ -42,7 +48,11 @@
       ActionAlert,
       CommentWrapper,
     },
-    computed: {},
+    computed: {
+      isMobile () {
+        return isMobile.any
+      },
+    },
     data () {
       return {
         alertType: '',
@@ -237,7 +247,8 @@
     watch: {
       comments () {
         debug('Mutation detected: comments')
-        this.commentList = [ ...this.curr_comments, ...this.comments, ]
+        this.commentList = [ ...this.comments, ]
+        this.curr_comments = []
       },
       curr_comments () {
         debug('Mutation detected: curr_comments')

@@ -1,5 +1,5 @@
 <template>
-  <CommentContainer class="content" :level="level">
+  <CommentContainer class="content" :class="{ 'mobile': isMobile }" :isMobile="isMobile" :level="level">
     <img :src="authorImage" slot="left" v-if="authorImage">
     <template slot="middle">
       <div class="content__author"><span v-text="authorNickname"></span></div>
@@ -10,10 +10,16 @@
         <div class="report" @click="goAct(POST_ACTION.REPORT)" v-if="showReport"><span v-text="COMMENT_SETTING.REPORT"></span></div>
       </div>      
     </template>
-    <Setting v-if="me" slot="right"
+    <Setting v-if="me && !isMobile" slot="right"
       :class="'content__setting'"
       :abilities="abilities"
       @goAct="goAct"></Setting>
+    <SettingFloat v-else-if="me && isMobile"
+      :showSettingFloat.sync="showSettingFloat"
+      :me="me"
+      :commentData="commentData"
+      :abilities="abilities"
+      @goAct="goAct" slot="middle"></SettingFloat>
   </CommentContainer>
 </template>
 <script>
@@ -21,6 +27,7 @@
   import { get, } from 'lodash'
   import CommentContainer from 'src/components/CommentContainer.vue'
   import Setting from 'src/components/Setting.vue'
+  import SettingFloat from 'src/components/SettingFloat.vue'
   import Timestamp from 'src/components/Timestamp.vue'
   import moment from 'moment'
   const debug = require('debug')('READR-COMMENT:CommentContent')
@@ -30,6 +37,7 @@
     components: {
       CommentContainer,
       Setting,
+      SettingFloat,
       Timestamp,
     },
     computed: {
@@ -67,6 +75,9 @@
       return {
         COMMENT_SETTING,
         POST_ACTION,
+        longpress: false,
+        presstimer: null,
+        showSettingFloat: false,
       }
     },
     methods: {
@@ -96,11 +107,41 @@
           this.$emit('update:showTextarea', true)
         }
       },
+      pressStart (e) {
+        if (e.type === 'click' && e.button !== 0) { return }
+        this.longpress = false
+        if (this.presstimer === null) {
+          this.presstimer = setTimeout(() => {
+            this.longpress = true
+          }, 1000)
+        }
+
+        return false
+      },
+      pressCancel (e) {
+        if (this.presstimer !== null) {
+          clearTimeout(this.presstimer)
+          this.presstimer = null
+          this.longpress = false
+        }
+      },
+      setupLongPressListeners () {
+        this.$el.addEventListener('touchstart', this.pressStart)
+        this.$el.addEventListener('touchend', this.pressCancel)
+        this.$el.addEventListener('touchleave', this.pressCancel)
+        this.$el.addEventListener('touchcancel', this.pressCancel)
+      },
     },
     mounted () {
       debug('CommentContent Mounted')
+      debug('isMobile', this.isMobile)
+      this.isMobile && this.setupLongPressListeners()
     },
     props: {
+      isMobile: {
+        type: Boolean,
+        default: () => false,
+      },
       commentData: {
         type: Object,
         default: () => ({
@@ -121,6 +162,14 @@
         type: Boolean,
         default: () => false,
       },
+    },
+    watch: {
+      longpress () {
+        debug('Mutation detected: longpress', this.longpress)
+        if (this.longpress) {
+          this.showSettingFloat = true
+        }
+      }
     },
   }
 </script>
@@ -190,4 +239,20 @@
         display block
     &__setting
       display none
+  
+    &.mobile
+      font-size 0.6875rem
+      .content__comment
+        text-align justify
+      .content__toolbox
+        > div
+          font-size 0.625rem
+          &:not(:last-child)
+            &::after
+              font-size 0.25rem
+        .timestamp
+          display flex
+          justify-content center
+          align-items center
+
 </style>

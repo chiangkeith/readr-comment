@@ -1,6 +1,6 @@
 {
   "name": "readr-comment",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This package is developed to meet Readr.tw's requirements of comments.",
   "main": "dist/index.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-runtime": "^6.22.0",
     "debug": "^3.1.0",
+    "ismobilejs": "^0.4.1",
     "lodash": "^4.17.10",
     "moment": "^2.22.1"
   },
