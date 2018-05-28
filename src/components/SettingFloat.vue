@@ -37,7 +37,16 @@
       get,
       goAct (type) { this.$emit('goAct', type) },
     },
-    mounted () {},
+    mounted () {
+      this.$el.addEventListener('dragstart', (e) => {
+        e.preventDefault()
+        return false
+      }, false)
+      this.$el.addEventListener('selectstart', (e) => {
+        e.preventDefault()
+        return false
+      }, false)      
+    },
     props: {
       commentData: {
         type: Object,
