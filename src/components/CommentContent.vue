@@ -130,6 +130,7 @@
         this.$el.addEventListener('touchend', this.pressCancel)
         this.$el.addEventListener('touchleave', this.pressCancel)
         this.$el.addEventListener('touchcancel', this.pressCancel)
+        this.$el.addEventListener('touchmove', this.pressCancel)
       },
     },
     mounted () {
