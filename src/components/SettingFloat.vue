@@ -11,6 +11,9 @@
 <script>
   import { COMMENT_SETTING, POST_ACTION, } from 'src/constants'
   import { get, map, } from 'lodash'
+  import preventScroll from 'prevent-scroll'
+
+  const debug = require('debug')('READR-COMMENT:SettingFloat')
   export default {
     name: 'SettingFloat',
     computed: {  
@@ -40,9 +43,11 @@
     mounted () {
       this.$el.addEventListener('dragstart', (e) => {
         e.preventDefault()
+        debug('dragstart detected!')
         return false
       }, false)
       this.$el.addEventListener('selectstart', (e) => {
+        debug('selectstart detected!')
         e.preventDefault()
         return false
       }, false)      
@@ -50,7 +55,7 @@
     props: {
       commentData: {
         type: Object,
-      },
+      },    
       me: {
         type: Object,
       },
@@ -66,7 +71,16 @@
         type: Boolean,
         default: () => false,
       },
-    },    
+    },  
+    watch: {
+      showSettingFloat () {
+        if (this.showSettingFloat) {
+          preventScroll.on()
+        } else {
+          preventScroll.off()
+        }
+      },
+    }, 
   }
 </script>
 <style lang="stylus" scoped>
@@ -81,6 +95,7 @@
   display flex
   justify-content center
   align-items center
+  user-select none
   .container
     width 250px
     > div

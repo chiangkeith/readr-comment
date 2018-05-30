@@ -3,7 +3,7 @@
     <img :src="authorImage" slot="left" v-if="authorImage">
     <template slot="middle">
       <div class="content__author"><span v-text="authorNickname"></span></div>
-      <div class="content__comment"><span v-text="body"></span></div>
+      <div class="content__comment" :class="{ 'prevent-select': showSettingFloat }"><span v-text="body"></span></div>
       <div class="content__toolbox">
         <div class="timestamp"><Timestamp :datetime="timestamp"></Timestamp></div>
         <div class="reply" @click="openTextarea"><span v-text="commentCount"></span></div>
@@ -182,6 +182,8 @@
       font-weight 500
     &__comment
       font-weight 300
+      &.prevent-select
+        user-select none
     &__toolbox
       display flex
       justify-content flex-start

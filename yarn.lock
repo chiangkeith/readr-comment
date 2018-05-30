@@ -3340,6 +3340,10 @@ prettier@^1.7.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.12.1.tgz#c1ad20e803e7749faf905a409d2367e06bbe7325"
 
+prevent-scroll@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/prevent-scroll/-/prevent-scroll-2.0.0.tgz#e8f6d3b7942baea9dedb82de81aef82b85af6fef"
+
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
