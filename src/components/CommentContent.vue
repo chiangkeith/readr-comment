@@ -55,7 +55,7 @@
         return get(this.commentData, 'authorImage')
       },
       body () {
-        return get(this.commentData, 'body', '灣國寶示心臉和大我毛商求部嚴臺據期親來看不形可毒升果於小二眾現進子化少許度，看有總如積這。')
+        return decodeURI(get(this.commentData, 'body'))
       },
       commentCount () {
         return get(this.commentData, 'commentAmount', 0)
@@ -182,6 +182,7 @@
       font-weight 500
     &__comment
       font-weight 300
+      overflow-wrap break-word
       &.prevent-select
         user-select none
     &__toolbox

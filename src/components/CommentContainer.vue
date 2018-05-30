@@ -34,6 +34,7 @@
     width 40px
   &__middle
     flex 1
+    width 0 /* fake width */
   &__left
     &.avatar
       width 30px
