@@ -2,7 +2,10 @@
   <CommentContainer class="content" :class="{ 'mobile': isMobile }" :isMobile="isMobile" :level="level">
     <img :src="authorImage" slot="left" v-if="authorImage">
     <template slot="middle">
-      <div class="content__author"><span v-text="authorNickname"></span></div>
+      <div class="content__author">
+        <template v-if="authorPage"><a :href="authorPage"><span v-text="authorNickname"></span></a></template>
+        <template v-else><span v-text="authorNickname"></span></template>
+      </div>
       <div class="content__comment" :class="{ 'prevent-select': showSettingFloat && hasAnyAbility }"><span v-text="body"></span></div>
       <div class="content__toolbox">
         <div class="timestamp"><Timestamp :datetime="timestamp"></Timestamp></div>
@@ -53,6 +56,9 @@
       },
       authorImage () {
         return get(this.commentData, 'authorImage')
+      },
+      authorPage () {
+        return get(this.commentData, 'authorPage')
       },
       body () {
         return decodeURI(get(this.commentData, 'body'))
