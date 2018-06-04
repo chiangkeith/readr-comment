@@ -3,7 +3,7 @@
     <img :src="authorImage" slot="left" v-if="authorImage">
     <template slot="middle">
       <div class="content__author"><span v-text="authorNickname"></span></div>
-      <div class="content__comment" :class="{ 'prevent-select': showSettingFloat }"><span v-text="body"></span></div>
+      <div class="content__comment" :class="{ 'prevent-select': showSettingFloat && hasAnyAbility }"><span v-text="body"></span></div>
       <div class="content__toolbox">
         <div class="timestamp"><Timestamp :datetime="timestamp"></Timestamp></div>
         <div class="reply" @click="openTextarea"><span v-text="commentCount"></span></div>
@@ -24,7 +24,7 @@
 </template>
 <script>
   import { COMMENT_SETTING, POST_ACTION, } from 'src/constants'
-  import { get, } from 'lodash'
+  import { get, map, } from 'lodash'
   import CommentContainer from 'src/components/CommentContainer.vue'
   import Setting from 'src/components/Setting.vue'
   import SettingFloat from 'src/components/SettingFloat.vue'
@@ -60,6 +60,15 @@
       commentCount () {
         return get(this.commentData, 'commentAmount', 0)
       },
+      hasAnyAbility () {
+        let isAny = false
+        map(this.abilities, (a, k) => {
+          if (a) {
+            isAny = true
+          }
+        })
+        return isAny
+      },      
       level () {
         return get(this.commentData, 'parentId') ? 1 : 0
       },

@@ -1,5 +1,5 @@
 <template>
-  <div class="setting-float" v-show="showSettingFloat">
+  <div class="setting-float" v-show="showSettingFloat && hasAnyAbility">
     <div class="container" v-if="hasAnyAbility">
       <div class="edit" v-if="get(abilities, 'isEditable')" @click="goAct(POST_ACTION.EDIT)"><span v-text="COMMENT_SETTING.EDIT"></span></div>
       <div class="delete" v-if="get(abilities, 'isDeletible')" @click="goAct(POST_ACTION.DELETE)"><span v-text="COMMENT_SETTING.DEL"></span></div>
@@ -42,14 +42,18 @@
     },
     mounted () {
       this.$el.addEventListener('dragstart', (e) => {
-        e.preventDefault()
-        debug('dragstart detected!')
-        return false
+        if (showSettingFloat && hasAnyAbility) {
+          e.preventDefault()
+          debug('dragstart detected!')
+          return false
+        }
       }, false)
       this.$el.addEventListener('selectstart', (e) => {
-        debug('selectstart detected!')
-        e.preventDefault()
-        return false
+        if (showSettingFloat && hasAnyAbility) {
+          debug('selectstart detected!')
+          e.preventDefault()
+          return false
+        }
       }, false)      
     },
     props: {
