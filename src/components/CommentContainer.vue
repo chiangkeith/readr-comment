@@ -50,7 +50,7 @@
         width 100%
         height 100%
         object-position center center
-        object-fit contain
+        object-fit cover
         border-radius 50%
 
   &.mobile
