@@ -61,7 +61,7 @@
         return get(this.commentData, 'authorPage')
       },
       body () {
-        return decodeURI(get(this.commentData, 'body'))
+        return decodeURI(get(this.commentData, 'body', '').replace(/\r?\n/g, '<br>'))
       },
       commentCount () {
         return get(this.commentData, 'commentAmount', 0)
