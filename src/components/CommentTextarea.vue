@@ -14,8 +14,11 @@
 <script>
   import CommentContainer from 'src/components/CommentContainer.vue'
   import moment from 'moment'
+  import sanitizeHtml from 'sanitize-html'
   import { COMMENT_SETTING, EDIT_TYPE, } from 'src/constants'
   import { get, } from 'lodash'
+
+  const debug = require('debug')('READR-COMMENT:CommentTextarea')
 
   export default {
     name: 'CommentTextarea',
@@ -70,7 +73,7 @@
       },
     },
     mounted () {
-      this.curr_value = this.value
+      this.curr_value = sanitizeHtml(this.value || '', { allowedTags: [], })
       if (this.type === EDIT_TYPE.UPDATE) {
         this.status = true
       }

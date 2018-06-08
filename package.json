@@ -1,6 +1,6 @@
 {
   "name": "readr-comment",
-  "version": "1.0.11",
+  "version": "1.0.15",
   "description": "This package is developed to meet Readr.tw's requirements of comments.",
   "main": "dist/index.js",
   "scripts": {
@@ -25,7 +25,8 @@
     "ismobilejs": "^0.4.1",
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
-    "prevent-scroll": "^2.0.0"
+    "prevent-scroll": "^2.0.0",
+    "sanitize-html": "^1.18.2"
   },
   "presets": [
     "env"

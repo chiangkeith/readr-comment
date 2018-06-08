@@ -6,7 +6,7 @@
         <template v-if="authorPage"><a :href="authorPage"><span v-text="authorNickname"></span></a></template>
         <template v-else><span v-text="authorNickname"></span></template>
       </div>
-      <div class="content__comment" :class="{ 'prevent-select': showSettingFloat && hasAnyAbility }"><span v-text="body"></span></div>
+      <div class="content__comment" :class="{ 'prevent-select': showSettingFloat && hasAnyAbility }"><span v-html="body"></span></div>
       <div class="content__toolbox">
         <div class="timestamp"><Timestamp :datetime="timestamp"></Timestamp></div>
         <div class="reply" @click="openTextarea"><span v-text="commentCount"></span></div>
@@ -195,11 +195,18 @@
     line-height normal
     &__author
       font-weight 500
+      & >>> a, a:hover, a:link, a:visited
+        color #000      
     &__comment
       font-weight 300
       overflow-wrap break-word
       &.prevent-select
         user-select none
+      & >>> a, a:hover, a:link, a:visited
+        font-weight 300
+        color #10b8c9
+      & >>> a:hover
+        color #0c919f
     &__toolbox
       display flex
       justify-content flex-start
