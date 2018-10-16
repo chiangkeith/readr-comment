@@ -2,8 +2,16 @@
   <CommentContainer :level="level" :class="{ 'mobile': isMobile }">
     <img :src="meImage" slot="left" v-if="meImage">
     <div class="textarea-container" slot="middle">
-      <textarea :rows="rows" cols="50" v-model="curr_value" @click="activate"
-        :placeholder="placeholder || COMMENT_SETTING.PLACEHOLDER"></textarea>
+      <template v-if="me.id">
+        <textarea :rows="rows" cols="50" v-model="curr_value" @click="activate"
+          :placeholder="placeholder || COMMENT_SETTING.PLACEHOLDER"></textarea>      
+      </template>
+      <template v-else>
+        <div>
+          <span v-text="COMMENT_SETTING.PLACEHOLDER_WITH_LOGIN"></span>
+          <span v-text="COMMENT_SETTING.LOGIN" class="login" @click="goLogin"></span>
+        </div>
+      </template>
     </div>
     <div class="tool" slot="middle" v-show="status">
       <div class="tool__cancel" @click="doCancel"><span v-text="COMMENT_SETTING.CANCEL"></span></div>
@@ -107,7 +115,11 @@
       },
       parentId: {
         type: Number,
-      }
+      },
+      goLogin: {
+        type: Function,
+        default: () => {},
+      },
     },
     watch: {
       curr_value: function () {
@@ -120,6 +132,19 @@
   .textarea-container
     width 100%
     background-color #fff
+    > div
+      border solid 1px #d3d3d3
+      padding 5px 10px
+      font-size 0.875rem
+      font-weight 300
+      height 50px
+      color #bdbdbd
+      .login
+        font-size 0.875rem
+        margin-left 5px
+        color #11b8c9
+        text-decoration underline
+        cursor pointer
     textarea
       width 100%
       border solid 1px #d3d3d3

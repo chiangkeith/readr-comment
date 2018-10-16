@@ -4,6 +4,7 @@ export const COMMENT_SETTING = {
   'HIDE': '隱藏',
   'REPORT': '檢舉',
   'PLACEHOLDER': '在想些什麼呢？寫下你的想法吧！',
+  'PLACEHOLDER_WITH_LOGIN': '要登入才可以「留言」喔！',
   'CONFIRM_MESSAGE': {
     'DELETE': '您確認要刪除此留言嗎？',
     'REPORT': '您確認要檢舉此留言嗎？',
@@ -21,6 +22,7 @@ export const COMMENT_SETTING = {
   'CONFIRM': '確定',
   'CANCEL': '取消',
   'USER': '使用者',
+  'LOGIN': '登入會員',
 }
 export const POST_ACTION = {
   'EDIT': 'EDIT',

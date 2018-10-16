@@ -5,6 +5,7 @@
     :level="level || checkLevel()"
     :parentId="parentId"
     :isMobile="isMobile"
+    :goLogin="goLogin"
     :me="me"></CommentTextarea>
   <CommentContent v-else-if="comment && !comment.isEditing"
     @refreshSubComment="refreshSubComment"
@@ -25,6 +26,7 @@
     :parentId="comment.parentId"
     :id="comment.id"
     :isMobile="isMobile"
+    :goLogin="goLogin"
     :me="me"></CommentTextarea>
 </template>
 <script>
@@ -97,6 +99,10 @@
       },
       parentId: {
         type: Number,
+      },
+      goLogin: {
+        type: Function,
+        default: () => {},
       },
     },
     watch: {

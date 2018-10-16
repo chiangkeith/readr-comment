@@ -2,6 +2,7 @@
   <div class="readr-comment">
     <CommentWrapper  v-if="!showTextareaBottom(commentList.length)"
       :isMobile="isMobile"
+      :goLogin="goLogin"
       :addComment="addComment" :level="0" :me="me"></CommentWrapper>      
     <template v-for="comment in commentList">
       <CommentWrapper v-if="comment.status"
@@ -30,6 +31,7 @@
     </template>
     <CommentWrapper v-if="showTextareaBottom(commentList.length)"
       :isMobile="isMobile"
+      :goLogin="goLogin"
       :addComment="addComment" :level="0" :me="me"></CommentWrapper>
     <ActionAlert :showAlert.sync="showAlert" :type="alertType" :callback="alertConfirmCb" :isMobile="isMobile"></ActionAlert>
   </div>
@@ -242,6 +244,10 @@
       },
       me: {
         type: Object,
+      },
+      goLogin: {
+        type: Function,
+        default: () => {},
       },
     },
     watch: {
