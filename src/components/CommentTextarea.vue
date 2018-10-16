@@ -140,7 +140,6 @@
       height 50px
       color #bdbdbd
       .login
-        font-size 0.875rem
         margin-left 5px
         color #11b8c9
         text-decoration underline
@@ -169,6 +168,9 @@
       margin-right 10px
   .mobile
     .textarea-container
+      > div
+        height 40px
+        font-size 0.6875rem
       textarea
         font-size 0.6875rem
     .tool
