@@ -12,6 +12,7 @@
         :reportComment="doReportComment"
         :hideComment="doHideComment"
         :delComment="delComment"
+        :goLogin="goLogin"
         :update="update" :me="me"></CommentWrapper>
       <template v-for="sub_comment in comment.replies">
         <CommentWrapper v-if="sub_comment.status"
@@ -21,12 +22,14 @@
           :reportComment="doReportComment"
           :hideComment="doHideComment"
           :delComment="delComment"
+          :goLogin="goLogin"
           :update="update" :me="me"></CommentWrapper>       
       </template>
       <CommentWrapper v-show="comment.showTextarea || get(comment, 'replies.length', 0)"
         :isMobile="isMobile"
         :addComment="addComment"
         :parentId="comment.id"
+        :goLogin="goLogin"
         :level="1" :me="me"></CommentWrapper>
     </template>
     <CommentWrapper v-if="showTextareaBottom(commentList.length)"
