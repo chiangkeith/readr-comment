@@ -267,7 +267,6 @@
       display none
   
     &.mobile
-      font-size 0.9375rem
       .content__comment
         text-align justify
       .content__toolbox
