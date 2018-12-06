@@ -32,6 +32,7 @@
   import Setting from 'src/components/Setting.vue'
   import SettingFloat from 'src/components/SettingFloat.vue'
   import Timestamp from 'src/components/Timestamp.vue'
+  import decodeUriComponent from 'decode-uri-component'
   import moment from 'moment'
   const debug = require('debug')('READR-COMMENT:CommentContent')
 
@@ -61,7 +62,7 @@
         return get(this.commentData, 'authorPage')
       },
       body () {
-        return decodeURI(get(this.commentData, 'body', '').replace(/\r?\n/g, '<br>'))
+        return decodeUriComponent(get(this.commentData, 'body', '').replace(/\r?\n/g, '<br>'))
       },
       commentCount () {
         return get(this.commentData, 'commentAmount', 0)
